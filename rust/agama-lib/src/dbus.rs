@@ -21,7 +21,7 @@ where
             "Failed to find property '{}'",
             name
         )))?
-        .into();
+        .try_into()?;
 
     T::try_from(value).map_err(|e| e.into())
 }
@@ -37,7 +37,7 @@ where
     <T as TryFrom<Value<'a>>>::Error: Into<zbus::zvariant::Error>,
 {
     if let Some(value) = properties.get(name) {
-        let value: Value = value.into();
+        let value: Value = value.try_into()?;
         T::try_from(value).map(|v| Some(v)).map_err(|e| e.into())
     } else {
         Ok(None)
