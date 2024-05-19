@@ -85,9 +85,9 @@ trait Manager1 {
 #[proxy(
     interface = "org.opensuse.Agama1.Questions",
     default_service = "org.opensuse.Agama1",
-    default_path = "/org/opensuse/Agama1/Questions"
+    assume_defaults = true
 )]
-trait Questions1 {
+trait Questions {
     /// AddAnswerFile method
     fn add_answer_file(&self, path: &str) -> zbus::Result<()>;
 
@@ -95,7 +95,7 @@ trait Questions1 {
     fn delete(&self, question: &zbus::zvariant::ObjectPath<'_>) -> zbus::Result<()>;
 
     /// New method
-    #[proxy(name = "New")]
+    #[zbus(name = "New")]
     fn new_question(
         &self,
         class: &str,

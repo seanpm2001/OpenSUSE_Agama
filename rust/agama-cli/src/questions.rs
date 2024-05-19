@@ -1,5 +1,5 @@
 use agama_lib::connection;
-use agama_lib::proxies::Questions1Proxy;
+use agama_lib::proxies::QuestionsProxy;
 use anyhow::Context;
 use clap::{Args, Subcommand, ValueEnum};
 
@@ -35,7 +35,7 @@ pub enum Modes {
     NonInteractive,
 }
 
-async fn set_mode(proxy: Questions1Proxy<'_>, value: Modes) -> anyhow::Result<()> {
+async fn set_mode(proxy: QuestionsProxy<'_>, value: Modes) -> anyhow::Result<()> {
     // TODO: how to print dbus error in that anyhow?
     proxy
         .set_interactive(value == Modes::Interactive)
@@ -43,7 +43,7 @@ async fn set_mode(proxy: Questions1Proxy<'_>, value: Modes) -> anyhow::Result<()
         .context("Failed to set mode for answering questions.")
 }
 
-async fn set_answers(proxy: Questions1Proxy<'_>, path: String) -> anyhow::Result<()> {
+async fn set_answers(proxy: QuestionsProxy<'_>, path: String) -> anyhow::Result<()> {
     // TODO: how to print dbus error in that anyhow?
     proxy
         .add_answer_file(path.as_str())
@@ -53,7 +53,7 @@ async fn set_answers(proxy: Questions1Proxy<'_>, path: String) -> anyhow::Result
 
 pub async fn run(subcommand: QuestionsCommands) -> anyhow::Result<()> {
     let connection = connection().await?;
-    let proxy = Questions1Proxy::new(&connection)
+    let proxy = QuestionsProxy::new(&connection)
         .await
         .context("Failed to connect to Questions service")?;
 
