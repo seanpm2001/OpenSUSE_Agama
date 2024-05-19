@@ -169,7 +169,7 @@ impl<'a> ProgressMonitor<'a> {
         let proxies = [&self.manager_proxy, &self.software_proxy];
         for proxy in proxies.iter() {
             let stream = proxy.receive_current_step_changed().await;
-            let path = proxy.path().as_str();
+            let path = proxy.inner().path().as_str();
             streams.insert(path, stream);
         }
         streams
