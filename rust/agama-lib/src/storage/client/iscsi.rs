@@ -70,30 +70,24 @@ pub struct ISCSIAuth {
     pub reverse_password: Option<String>,
 }
 
-impl From<ISCSIAuth> for HashMap<String, OwnedValue> {
+impl<'a> From<ISCSIAuth> for HashMap<String, Value<'a>> {
     fn from(value: ISCSIAuth) -> Self {
         let mut hash = HashMap::new();
 
         if let Some(username) = value.username {
-            hash.insert("Username".to_string(), Value::new(username).to_owned());
+            hash.insert("Username".to_string(), username.into());
         }
 
         if let Some(password) = value.password {
-            hash.insert("Password".to_string(), Value::new(password).to_owned());
+            hash.insert("Password".to_string(), password.into());
         }
 
         if let Some(reverse_username) = value.reverse_username {
-            hash.insert(
-                "ReverseUsername".to_string(),
-                Value::new(reverse_username).to_owned(),
-            );
+            hash.insert("ReverseUsername".to_string(), reverse_username.into());
         }
 
         if let Some(reverse_password) = value.reverse_password {
-            hash.insert(
-                "ReversePassword".to_string(),
-                Value::new(reverse_password).to_owned(),
-            );
+            hash.insert("ReversePassword".to_string(), reverse_password.into());
         }
 
         hash
@@ -221,8 +215,8 @@ impl<'a> ISCSIClient<'a> {
     ) -> Result<LoginResult, ServiceError> {
         let proxy = self.get_node_proxy(id).await?;
 
-        let mut options: HashMap<String, OwnedValue> = auth.into();
-        options.insert("Startup".to_string(), Value::new(startup).to_owned());
+        let mut options: HashMap<String, Value<'_>> = auth.into();
+        options.insert("Startup".to_string(), Value::new(startup));
 
         // FIXME: duplicated code (see discover)
         let mut options_ref: HashMap<&str, &zvariant::Value<'_>> = HashMap::new();
