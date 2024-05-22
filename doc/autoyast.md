@@ -259,7 +259,8 @@ Agama includes an specific `mode` options to set the mode, instead of abusing th
 
 ### Bridge connections
 
-> [!WARNING] Not implemented yet
+> [!WARNING]
+>  Not implemented yet
 
 The AutoYaST `bridge*` elements allow setting up a bridge. In Agama, those settings are placed under
 a `bridge` key in the `connection` structure.
@@ -274,7 +275,8 @@ a `bridge` key in the `connection` structure.
 
 ### VLAN
 
-> [!WARNING] Not implemented yet
+> [!WARNING]
+> Not implemented yet
 
 The AutoYaST `vlan_settings` elements allow setting up a bridge. In Agama, those settings are placed
 under a `vlan` key in the `connection` structure.
