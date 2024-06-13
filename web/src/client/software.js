@@ -236,6 +236,7 @@ class ProductBaseClient {
    * @param {string} id - Product ID.
    */
   async select(id) {
+    console.log("selecting the product");
     await this.client.put("/software/config", { product: id });
   }
 

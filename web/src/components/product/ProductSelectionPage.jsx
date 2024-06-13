@@ -58,6 +58,7 @@ function ProductSelectionPage() {
       manager.startProbing();
     }
 
+    console.log("Redirect to /");
     navigate("/");
   };
 
