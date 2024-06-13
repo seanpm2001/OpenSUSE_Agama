@@ -46,6 +46,9 @@ function App() {
   const { language } = useInstallerL10n();
   const [status, setStatus] = useState(undefined);
   const [phase, setPhase] = useState(undefined);
+  console.log("Rendering App");
+  console.log("phase", phase, "status", status);
+  console.log("APP", "products", products, "selectedProduct", selectedProduct);
 
   useEffect(() => {
     if (client) {
@@ -73,6 +76,7 @@ function App() {
   }, [client, setPhase, setStatus]);
 
   const Content = () => {
+    console.log("Content", "products", products, "selectedProduct", selectedProduct);
     if (error) return <ServerError />;
 
     if (phase === INSTALL) {
@@ -86,13 +90,16 @@ function App() {
     }
 
     if (selectedProduct === null && !location.pathname.includes("products")) {
+      console.log("Redirect");
       return <Navigate to="/products" />;
     }
 
     if (phase === CONFIG && status === BUSY) {
+      console.log("<ProductSelectionProgress />");
       return <ProductSelectionProgress />;
     }
 
+    console.log("<Outlet />");
     return <Outlet />;
   };
 

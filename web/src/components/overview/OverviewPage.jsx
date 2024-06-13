@@ -89,6 +89,7 @@ const IssuesList = ({ issues }) => {
 export default function OverviewPage() {
   const [issues, setIssues] = useState([]);
   const client = useInstallerClient();
+  console.log("<OverviewPage />");
 
   useEffect(() => {
     client.issues().then(setIssues);
