@@ -94,6 +94,7 @@ class WSClient {
     };
 
     client.onmessage = (event) => {
+      console.log("dispatch", event);
       this.dispatchEvent(event);
     };
 
