@@ -47,6 +47,7 @@ function ProductSelectionPage() {
   const { manager, product } = useInstallerClient();
   const { products, selectedProduct } = useProduct();
   const [nextProduct, setNextProduct] = useState(selectedProduct);
+  console.log("<ProductSelectionPage />");
 
   const onSubmit = async (e) => {
     e.preventDefault();

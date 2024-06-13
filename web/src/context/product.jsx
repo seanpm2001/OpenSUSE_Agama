@@ -56,7 +56,10 @@ function ProductProvider({ children }) {
   useEffect(() => {
     if (!client) return;
 
-    return client.product.onChange(setSelectedId);
+    return client.product.onChange((id) => {
+      console.log("product changed:", id);
+      setSelectedId(id);
+    });
   }, [client, setSelectedId]);
 
   useEffect(() => {
@@ -90,6 +93,8 @@ function useProduct() {
 
   const { products = [], selectedId } = context;
   const selectedProduct = products.find(p => p.id === selectedId) || null;
+  console.log("context/products: products", products);
+  console.log("context/products: selectedProduct", selectedProduct);
 
   return { ...context, selectedProduct };
 }

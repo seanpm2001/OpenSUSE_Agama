@@ -76,7 +76,7 @@ function App() {
   }, [client, setPhase, setStatus]);
 
   const Content = () => {
-    console.log("Content", "products", products, "selectedProduct", selectedProduct);
+    console.log("<Content/>", "products", products, "selectedProduct", selectedProduct, "location", location.pathname);
     if (error) return <ServerError />;
 
     if (phase === INSTALL) {
@@ -90,7 +90,7 @@ function App() {
     }
 
     if (selectedProduct === null && !location.pathname.includes("products")) {
-      console.log("Redirect");
+      console.log("Redirect to /products");
       return <Navigate to="/products" />;
     }
 
