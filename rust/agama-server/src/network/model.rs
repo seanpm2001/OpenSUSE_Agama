@@ -652,7 +652,7 @@ impl TryFrom<Connection> for NetworkConnection {
     }
 }
 
-#[derive(Default, Debug, PartialEq, Clone, Serialize)]
+#[derive(Default, Debug, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub enum ConnectionConfig {
     #[default]
     Ethernet,
@@ -666,7 +666,7 @@ pub enum ConnectionConfig {
     Tun(TunConfig),
 }
 
-#[derive(Default, Debug, PartialEq, Clone, Serialize)]
+#[derive(Default, Debug, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub enum PortConfig {
     #[default]
     None,
@@ -689,7 +689,7 @@ impl From<WirelessConfig> for ConnectionConfig {
 #[error("Invalid MAC address: {0}")]
 pub struct InvalidMacAddress(String);
 
-#[derive(Debug, Default, Clone, PartialEq, Serialize)]
+#[derive(Debug, Default, Clone, PartialEq, Serialize, utoipa::ToSchema)]
 pub enum MacAddress {
     MacAddress(macaddr::MacAddr6),
     Preserve,
@@ -750,7 +750,7 @@ impl From<InvalidMacAddress> for zbus::fdo::Error {
 }
 
 #[skip_serializing_none]
-#[derive(Default, Debug, PartialEq, Clone, Serialize)]
+#[derive(Default, Debug, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct IpConfig {
     pub method4: Ipv4Method,
@@ -766,7 +766,7 @@ pub struct IpConfig {
 }
 
 #[skip_serializing_none]
-#[derive(Debug, Default, PartialEq, Clone, Serialize)]
+#[derive(Debug, Default, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub struct MatchConfig {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub driver: Vec<String>,
@@ -895,7 +895,7 @@ impl From<&IpRoute> for HashMap<&str, Value<'_>> {
     }
 }
 
-#[derive(Debug, Default, PartialEq, Clone, Serialize)]
+#[derive(Debug, Default, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub enum VlanProtocol {
     #[default]
     IEEE802_1Q,
@@ -928,7 +928,7 @@ impl fmt::Display for VlanProtocol {
     }
 }
 
-#[derive(Debug, Default, PartialEq, Clone, Serialize)]
+#[derive(Debug, Default, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub struct VlanConfig {
     pub parent: String,
     pub id: u32,
@@ -936,7 +936,7 @@ pub struct VlanConfig {
 }
 
 #[serde_as]
-#[derive(Debug, Default, PartialEq, Clone, Serialize)]
+#[derive(Debug, Default, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct WirelessConfig {
     pub mode: WirelessMode,
@@ -1035,7 +1035,7 @@ impl fmt::Display for WirelessMode {
     }
 }
 
-#[derive(Debug, Clone, Copy, Default, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Serialize, utoipa::ToSchema)]
 pub enum SecurityProtocol {
     #[default]
     WEP, // No encryption or WEP ("none")
@@ -1207,7 +1207,7 @@ impl fmt::Display for BondOptions {
     }
 }
 
-#[derive(Debug, Default, PartialEq, Clone, Serialize)]
+#[derive(Debug, Default, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub struct BondConfig {
     pub mode: BondMode,
     pub options: BondOptions,
@@ -1251,7 +1251,7 @@ impl TryFrom<BondConfig> for BondSettings {
     }
 }
 
-#[derive(Debug, Default, PartialEq, Clone, Serialize)]
+#[derive(Debug, Default, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub struct BridgeConfig {
     pub stp: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1274,7 +1274,7 @@ pub struct BridgePortConfig {
     pub path_cost: Option<u32>,
 }
 
-#[derive(Default, Debug, PartialEq, Clone, Serialize)]
+#[derive(Default, Debug, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub struct InfinibandConfig {
     pub p_key: Option<i32>,
     pub parent: Option<String>,
@@ -1321,7 +1321,7 @@ pub enum TunMode {
     Tap = 2,
 }
 
-#[derive(Default, Debug, PartialEq, Clone, Serialize)]
+#[derive(Default, Debug, PartialEq, Clone, Serialize, utoipa::ToSchema)]
 pub struct TunConfig {
     pub mode: TunMode,
     pub group: Option<String>,
