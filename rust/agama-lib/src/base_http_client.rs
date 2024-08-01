@@ -28,6 +28,15 @@ pub struct BaseHTTPClient {
 const API_URL: &str = "http://localhost/api";
 
 impl BaseHTTPClient {
+    // Provides new client with no specialities like authorization headers or so.
+    // If needed, there is place for helpers like "self::to_authorized" or so.
+    pub fn bare() -> Result<Self, ServiceError> {
+        Ok(Self {
+            client: reqwest::Client::new(),
+            base_url: API_URL.to_string(),
+        })
+    }
+
     // if there is need for client without authorization, create new constructor for it
     pub fn new() -> Result<Self, ServiceError> {
         let token = AuthToken::find().ok_or(ServiceError::NotAuthenticated)?;
